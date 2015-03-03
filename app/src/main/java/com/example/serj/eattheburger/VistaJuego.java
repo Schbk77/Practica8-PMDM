@@ -92,22 +92,28 @@ public class VistaJuego extends SurfaceView implements SurfaceHolder.Callback, S
         // si el nivel es 1...
         switch (nivel) {
             case 1:
-                comidas = new Comida[250];
+                comidas = new Comida[1000];
                 for (int i = 0; i < comidas.length; i++) {
                     // Tipo de comida
                     Random tipo = new Random();
-                    comidas[i] = new Comida(getContext(), tipo.nextInt(7)); // <-- SUSTITUIR POR NUM MAX DE TIPOS
+                    comidas[i] = new Comida(getContext(), tipo.nextInt(7));
                     // Columna en la que aparece
                     Random columna = new Random();
                     posXColumna = (ejeXColumna * columna.nextInt(COLUMNAS)) + 65;
                     comidas[i].setColumna(posXColumna);
                     // Para que aparezcan alternos y separados
-                    comidas[i].setPosicionY(100);
-                    for (int j = 0; j < i - 1; j++) {
+                    Random rnd = new Random();
+                    if(i==0){
+                        comidas[i].setPosicionY(screenHeight*5);
+                        Log.v("POSICION", comidas[i].getEjeY()+"");
+                    } else {
+                        comidas[i].setPosicionY(comidas[i-1].getEjeY()+rnd.nextInt(8000)+screenHeight);
+                    }
+                    /*for (int j = 0; j < i - 1; j++) {
                         while (comidas[i].colisiona(comidas[j], 1000)) {
                             comidas[i].setPosicionY(100);
                         }
-                    }
+                    }*/
                     // Velocidad con la que cae(FACIL)
                     comidas[i].setVelocidad(10);
                 }
@@ -143,19 +149,8 @@ public class VistaJuego extends SurfaceView implements SurfaceHolder.Callback, S
         // Dibujar bandeja
         bandeja.dibujar(canvas);
         // Subir dificultad segun puntuacion
-        if(puntuacion > 500 && puntuacion < 1000){
-            // MEDIO
-            for(Comida c : comidas){
-                c.setVelocidad(20);
-            }
-        } else if(puntuacion > 1000){
-            // DIFICIL
-            for(Comida c : comidas){
-                //Random velocidad = new Random();
-                //c.setVelocidad(velocidad.nextInt(3 + (c.getDireccionY() * 2)));
-                c.setVelocidad(30);
-            }
-        }
+        subirDificultad();
+
         // Dibujar comidas
         for (int i = 0; i < comidas.length; i++) {
             comidas[i].dibujar(canvas);
@@ -198,8 +193,36 @@ public class VistaJuego extends SurfaceView implements SurfaceHolder.Callback, S
         text_x = 365; // Coordenadas puntuacion
         text_y = 100;
         canvas.drawText("Puntos: " + String.valueOf(puntuacion), text_x, text_y, paint);
+    }
 
-
+    private void subirDificultad() {
+        if(puntuacion > 500 && puntuacion < 1000){
+            // MEDIO
+            if(Comida.getDireccionY() < 25){
+                Comida.setDireccionY(25);
+            }
+        } else if(puntuacion > 1000 && puntuacion < 2000){
+            // DIFICIL
+            if(Comida.getDireccionY() < 30){
+                Comida.setDireccionY(30);
+            }
+        } else if(puntuacion > 1000 && puntuacion < 2000){
+            if(Comida.getDireccionY() < 35){
+                Comida.setDireccionY(35);
+            }
+        } else if(puntuacion > 2000 && puntuacion < 3000){
+            if(Comida.getDireccionY() < 40){
+                Comida.setDireccionY(40);
+            }
+        } else if(puntuacion > 3000 && puntuacion < 4000){
+            if(Comida.getDireccionY() < 45){
+                Comida.setDireccionY(45);
+            }
+        } else if(puntuacion > 4000 && puntuacion < 5000){
+            if(Comida.getDireccionY() < 50){
+                Comida.setDireccionY(50);
+            }
+        }
     }
 
     // Callback

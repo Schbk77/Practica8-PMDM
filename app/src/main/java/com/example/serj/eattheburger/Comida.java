@@ -15,7 +15,7 @@ public class Comida {
     private boolean comida;
     private int ancho, alto;
     private int ejeY = 0;
-    private int direccionY;
+    private static int direccionY;
     private int ejeX = 0;
     private int puntos;
 
@@ -59,7 +59,7 @@ public class Comida {
         return ejeY;
     }
 
-    public int getDireccionY() {
+    public static int getDireccionY() {
         return direccionY;
     }
 
@@ -149,6 +149,10 @@ public class Comida {
         }
     }
 
+    public static void setDireccionY(int direccionY) {
+        Comida.direccionY = direccionY;
+    }
+
     public void setVelocidad(int direccionY){
         //Random velocidad = new Random();
         //this.direccionY = velocidad.nextInt(5+(direccionY*2))+3;
@@ -156,7 +160,8 @@ public class Comida {
     }
 
     public void setPosicionY(int distancia) {
-        Random y = new Random();
-        this.ejeY = -(y.nextInt(distancia)+(y.nextInt(distancia)*distancia));
+        //Random y = new Random();
+        //this.ejeY = -(y.nextInt(distancia)+(y.nextInt(distancia)*distancia));
+        this.ejeY = -distancia;
     }
 }
