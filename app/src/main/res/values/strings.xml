@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Eat the burger!</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_juego">Juego</string>
+    <string name="title_activity_game_over">GameOver</string>
+</resources>
